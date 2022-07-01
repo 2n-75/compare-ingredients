@@ -12,13 +12,13 @@ const Presentation: FC<Props> = ({ products }) => {
 
   return (
     <table css={styles.table}>
-      <tr css={styles.row}>
+      <tr css={[styles.row, styles.headerRow]}>
         {header.map(item => (
           <th css={styles.headerCell}>{item}</th>
         ))}
       </tr>
       {products.map(product => (
-        <tr css={styles.row}>
+        <tr css={[styles.row, styles.contentRow]}>
           <td css={styles.contentCell}>
             <div>{product.name}</div>
           </td>
@@ -42,11 +42,17 @@ const styles = {
     display: grid;
     grid-template-columns: 0.5fr 1fr 160px;
   `,
+  headerRow: css`
+    background: ${Colors.black};
+    border-radius: 3px 3px 0 0;
+  `,
+  contentRow: css`
+    border-bottom: 1px solid ${Colors.gray};
+  `,
   headerCell: css`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: ${Colors.black};
     color: ${Colors.white};
     font-weight: 700;
     padding: 16px 0;
