@@ -34,7 +34,7 @@ const Form: FC<Props> = ({ setUrl }) => {
           {errors.url && <p css={styles.errorMessage}>入力された値は無効です</p>}
         </div>
         <button type="submit" css={styles.submitButton} disabled={!isDirty || !isValid}>
-          send
+          取得する
         </button>
       </div>
     </form>
@@ -55,7 +55,7 @@ const styles = {
     padding: 8px;
     border-radius: 3px;
     border: 1px solid ${Colors.gray};
-    font-size: 20px;
+    font-size: 16px;
     &::placeholder {
       color: ${Colors.gray};
     }
@@ -64,14 +64,13 @@ const styles = {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 8px 0;
     width: 180px;
-    height: 40px;
     background: ${Colors.primary};
     color: white;
     border-radius: 3px;
     transition: 0.4s;
     border: none;
-    font-size: 20px;
     font-weight: 700;
     &:disabled {
       background: ${Colors.gray};

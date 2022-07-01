@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import App from '../components/App'
 import 'the-new-css-reset/css/reset.css'
 import { getProduct, Product } from '@/utils/getProduct'
+import { ProductList } from '@/components/ProductList'
+import { css } from '@emotion/react'
 
 export default function Home() {
   const [url, setUrl] = useState('')
@@ -20,18 +22,15 @@ export default function Home() {
         <Form setUrl={setUrl}></Form>
       </section>
 
-      {product && (
-        <>
-          <div>
-            <p>{product.id}</p>
-            <p>{product.name}</p>
-            <p>{product.price}</p>
-            <a href={product.url} target="_blank">
-              商品ページを見る
-            </a>
-          </div>
-        </>
-      )}
+      <section css={styles.productListWrapper}>
+        <ProductList />
+      </section>
     </App>
   )
+}
+
+const styles = {
+  productListWrapper: css`
+    margin-top: 40px;
+  `,
 }
