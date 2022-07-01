@@ -1,6 +1,7 @@
 import { Dispatch, FC, SetStateAction, useRef } from 'react'
 import { css } from '@emotion/react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { Colors } from '@/styles/colors'
 
 export type Props = {
   setUrl: Dispatch<SetStateAction<string>>
@@ -53,10 +54,10 @@ const styles = {
     width: 100%;
     padding: 8px;
     border-radius: 3px;
-    border: 1px solid #aaa;
+    border: 1px solid ${Colors.gray};
     font-size: 20px;
     &::placeholder {
-      color: #aaa;
+      color: ${Colors.gray};
     }
   `,
   submitButton: css`
@@ -65,7 +66,7 @@ const styles = {
     justify-content: center;
     width: 180px;
     height: 40px;
-    background: #67c5ff;
+    background: ${Colors.primary};
     color: white;
     border-radius: 3px;
     transition: 0.4s;
@@ -73,7 +74,7 @@ const styles = {
     font-size: 20px;
     font-weight: 700;
     &:disabled {
-      background: #aaa;
+      background: ${Colors.gray};
     }
   `,
   errorMessage: css`

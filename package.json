@@ -12,10 +12,10 @@
     "lint": "prettier --write \"*.{md,js,json,yml}\" \"{src,agreed}/**/*\""
   },
   "dependencies": {
+    "@emotion/css": "^11.9.0",
     "@emotion/react": "^11.9.0",
     "firebase-admin": "^9.4.2",
     "firebase-functions": "^3.13.1",
-    "modern-normalize": "^1.1.0",
     "next": "latest",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
