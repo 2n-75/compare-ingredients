@@ -1,39 +1,24 @@
-import { Dispatch, FC, SetStateAction, useRef, useState } from 'react'
-import { css } from '@emotion/react'
-import { SubmitHandler, useForm } from 'react-hook-form'
 import { Colors } from '@/styles/colors'
-import { functions } from '@/server/init'
-import { httpsCallable } from 'firebase/functions'
-import { getProduct } from '@/server/getProduct'
+import { FC, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { css } from '@emotion/react'
 
 export type Props = {
-  setUrl: Dispatch<SetStateAction<string>>
+  isFetching: boolean
+  onSubmit: SubmitHandler<Input>
 }
 
 type Input = {
   url: string
 }
-const Form: FC<Props> = ({ setUrl }) => {
-  const [isFetching, setIsFetching] = useState(false)
+const Presentation: FC<Props> = ({ isFetching, onSubmit }) => {
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isDirty, isValid, isValidating },
+    formState: { errors, isDirty, isValid },
   } = useForm<Input>({ mode: 'onChange' })
-  const onSubmit: SubmitHandler<Input> = data => {
-    setUrl(data.url)
-    setIsFetching(true)
-    getProduct(data.url)
-      .then(result => {
-        setIsFetching(false)
-        console.log({ result })
-      })
-      .catch(error => {
-        console.log({ error })
-        setIsFetching(false)
-      })
-  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} css={styles.form}>
       <label>商品ページURL</label>
@@ -47,7 +32,7 @@ const Form: FC<Props> = ({ setUrl }) => {
           {errors.url && <p css={styles.errorMessage}>入力された値は無効です</p>}
         </div>
 
-        <button type="submit" css={styles.submitButton} disabled={isFetching}>
+        <button type="submit" css={styles.submitButton} disabled={isFetching || !isDirty || !isValid}>
           取得する
         </button>
       </div>
@@ -80,6 +65,7 @@ const styles = {
     justify-content: center;
     padding: 8px 0;
     width: 180px;
+    height: 42px;
     background: ${Colors.primary};
     color: white;
     border-radius: 3px;
@@ -103,4 +89,4 @@ const styles = {
   `,
 }
 
-export default Form
+export default Presentation
