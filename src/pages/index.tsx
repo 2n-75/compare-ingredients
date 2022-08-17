@@ -1,9 +1,10 @@
 import Form from '@/components/Form'
-import { useEffect, useState } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import 'the-new-css-reset/css/reset.css'
 import { ProductList } from '@/components/ProductList'
 import { css } from '@emotion/react'
 import App from '@/components/App'
+import { initialState, reducer } from '@/store/products'
 
 export type Product = {
   id: number
@@ -15,17 +16,18 @@ export type Product = {
 
 export default function Home() {
   const [url, setUrl] = useState('')
-  const [product, setProduct] = useState<Product | null>(null)
+  const [products, setProducts] = useState<Product[]>([])
+
   return (
     <App>
       <p>Index Page</p>
       <section>
         <h2>商品情報取得</h2>
-        <Form setUrl={setUrl}></Form>
+        <Form setUrl={setUrl} setProducts={setProducts} products={products}></Form>
       </section>
 
       <section css={styles.productListWrapper}>
-        <ProductList />
+        <ProductList products={products} />
       </section>
     </App>
   )

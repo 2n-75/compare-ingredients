@@ -21,29 +21,37 @@ const Presentation: FC<Props> = ({ products }) => {
         </tr>
       </thead>
 
-      <tbody>
-        {products.map(product => (
-          <tr css={[styles.row, styles.contentRow]} key={product.id}>
-            <td css={styles.contentCell}>
-              <div>{product.name}</div>
-            </td>
-            <td css={styles.contentCell}>{product.ingredients}</td>
-            <td css={styles.contentCell}>
-              <a href={product.url} target="_blank" css={styles.link}>
-                <span css={styles.linkTextWrapper}>
-                  {product.price}円<span css={styles.linkSubText}>商品ページへ</span>
-                </span>
-              </a>
-            </td>
-          </tr>
-        ))}
-      </tbody>
+      {products.length === 0 ? (
+        <>
+          <p css={styles.noContentText}>データがありません</p>
+        </>
+      ) : (
+        <tbody>
+          {products.map(product => (
+            <tr css={[styles.row, styles.contentRow]} key={product.id}>
+              <td css={styles.contentCell}>
+                <div>{product.name}</div>
+              </td>
+              <td css={styles.contentCell}>{product.ingredients}</td>
+              <td css={styles.contentCell}>
+                <a href={product.url} target="_blank" css={styles.link}>
+                  <span css={styles.linkTextWrapper}>
+                    {product.price}円<span css={styles.linkSubText}>商品ページへ</span>
+                  </span>
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      )}
     </table>
   )
 }
 
 const styles = {
-  table: css``,
+  table: css`
+    width: 100%;
+  `,
   row: css`
     display: grid;
     grid-template-columns: 0.5fr 1fr 160px;
@@ -93,6 +101,11 @@ const styles = {
   linkSubText: css`
     font-size: 12px;
     font-weight: normal;
+  `,
+  noContentText: css`
+    font-size: 16px;
+    font-weight: normal;
+    padding: 8px;
   `,
 }
 
