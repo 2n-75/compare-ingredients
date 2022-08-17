@@ -1,7 +1,10 @@
-import { Dispatch, FC, SetStateAction, useRef } from 'react'
+import { Dispatch, FC, SetStateAction, useRef, useState } from 'react'
 import { css } from '@emotion/react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Colors } from '@/styles/colors'
+import { functions } from '@/server/init'
+import { httpsCallable } from 'firebase/functions'
+import { getProduct } from '@/server/getProduct'
 
 export type Props = {
   setUrl: Dispatch<SetStateAction<string>>
@@ -11,6 +14,7 @@ type Input = {
   url: string
 }
 const Form: FC<Props> = ({ setUrl }) => {
+  const [isFetching, setIsFetching] = useState(false)
   const {
     register,
     handleSubmit,
@@ -18,8 +22,17 @@ const Form: FC<Props> = ({ setUrl }) => {
     formState: { errors, isDirty, isValid, isValidating },
   } = useForm<Input>({ mode: 'onChange' })
   const onSubmit: SubmitHandler<Input> = data => {
-    console.log(data)
     setUrl(data.url)
+    setIsFetching(true)
+    getProduct(data.url)
+      .then(result => {
+        setIsFetching(false)
+        console.log({ result })
+      })
+      .catch(error => {
+        console.log({ error })
+        setIsFetching(false)
+      })
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)} css={styles.form}>
@@ -33,7 +46,8 @@ const Form: FC<Props> = ({ setUrl }) => {
           />
           {errors.url && <p css={styles.errorMessage}>入力された値は無効です</p>}
         </div>
-        <button type="submit" css={styles.submitButton} disabled={!isDirty || !isValid}>
+
+        <button type="submit" css={styles.submitButton} disabled={isFetching}>
           取得する
         </button>
       </div>
@@ -78,6 +92,14 @@ const styles = {
   `,
   errorMessage: css`
     margin-top: 10px;
+  `,
+  checkbox: css`
+    width: 20px;
+    height: 20px;
+    background: blue;
+    &:checked {
+      background: red;
+    }
   `,
 }
 
