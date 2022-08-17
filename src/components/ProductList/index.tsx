@@ -12,7 +12,7 @@ export const ProductList: FC = () => {
       url: 'https://www.cosme.com/products/detail.php?product_id=51819',
     },
     {
-      id: 1,
+      id: 2,
       name: 'ザ・タイムR アクア / 単体 / 200ml',
       price: '4,400',
       ingredients:
@@ -20,7 +20,7 @@ export const ProductList: FC = () => {
       url: 'https://www.cosme.com/products/detail.php?product_id=51819',
     },
     {
-      id: 1,
+      id: 3,
       name: 'ザ・タイムR アクア / 単体 / 200ml',
       price: '4,400',
       ingredients:

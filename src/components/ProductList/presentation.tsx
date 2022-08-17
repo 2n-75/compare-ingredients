@@ -1,8 +1,7 @@
 import { FC } from 'react'
-import Link from 'next/link'
-import { Product } from '@/utils/getProduct'
 import { css } from '@emotion/react'
 import { Colors } from '@/styles/colors'
+import { Product } from '@/pages'
 
 export type Props = {
   products: Array<Product>
@@ -12,26 +11,33 @@ const Presentation: FC<Props> = ({ products }) => {
 
   return (
     <table css={styles.table}>
-      <tr css={[styles.row, styles.headerRow]}>
-        {header.map(item => (
-          <th css={styles.headerCell}>{item}</th>
-        ))}
-      </tr>
-      {products.map(product => (
-        <tr css={[styles.row, styles.contentRow]}>
-          <td css={styles.contentCell}>
-            <div>{product.name}</div>
-          </td>
-          <td css={styles.contentCell}>{product.ingredients}</td>
-          <td css={styles.contentCell}>
-            <a href={product.url} target="_blank" css={styles.link}>
-              <span css={styles.linkTextWrapper}>
-                {product.price}円<span css={styles.linkSubText}>商品ページへ</span>
-              </span>
-            </a>
-          </td>
+      <thead>
+        <tr css={[styles.row, styles.headerRow]}>
+          {header.map(item => (
+            <th css={styles.headerCell} key={item}>
+              {item}
+            </th>
+          ))}
         </tr>
-      ))}
+      </thead>
+
+      <tbody>
+        {products.map(product => (
+          <tr css={[styles.row, styles.contentRow]} key={product.id}>
+            <td css={styles.contentCell}>
+              <div>{product.name}</div>
+            </td>
+            <td css={styles.contentCell}>{product.ingredients}</td>
+            <td css={styles.contentCell}>
+              <a href={product.url} target="_blank" css={styles.link}>
+                <span css={styles.linkTextWrapper}>
+                  {product.price}円<span css={styles.linkSubText}>商品ページへ</span>
+                </span>
+              </a>
+            </td>
+          </tr>
+        ))}
+      </tbody>
     </table>
   )
 }
@@ -75,6 +81,10 @@ const styles = {
     font-size: 16px;
     font-weight: 700;
     text-align: center;
+    transition: all 0.2s;
+    &:hover {
+      background: ${Colors.link};
+    }
   `,
   linkTextWrapper: css`
     display: flex;
