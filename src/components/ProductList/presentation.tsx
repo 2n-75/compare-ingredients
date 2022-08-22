@@ -2,42 +2,66 @@ import { FC } from 'react'
 import { css } from '@emotion/css'
 import { Colors } from '@/styles/colors'
 import { Product } from '../App'
+import { Checkbox } from '../Checkbox'
 
 export type Props = {
-  products: Array<Product>
+  products: Array<{
+    id: number
+    name: string
+    price: string
+    ingredients: string[]
+    url: string
+  }>
+  commonIngredients: string[]
+  enableHighlight: boolean
+  handleHighlight: () => void
 }
-const Presentation: FC<Props> = ({ products }) => {
+const Presentation: FC<Props> = ({ products, commonIngredients, enableHighlight, handleHighlight }) => {
   const header = ['商品', '成分', '価格']
 
   return (
-    <table className={styles.table}>
-      <thead>
-        <tr className={styles.headerRow}>
-          {header.map(item => (
-            <th className={styles.headerCell} key={item}>
-              {item}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {products.map(product => (
-          <tr className={styles.contentRow} key={product.id}>
-            <td className={styles.contentCell}>
-              <div>{product.name}</div>
-            </td>
-            <td className={styles.contentCell}>{product.ingredients}</td>
-            <td className={styles.contentCell}>
-              <a href={product.url} target="_blank" className={styles.link}>
-                <span className={styles.linkTextWrapper}>
-                  {product.price}円<span className={styles.linkSubText}>商品ページへ</span>
-                </span>
-              </a>
-            </td>
+    <>
+      <Checkbox onChange={handleHighlight}>同じ成分をハイライトする</Checkbox>
+      <table className={styles.table}>
+        <thead>
+          <tr className={styles.headerRow}>
+            {header.map(item => (
+              <th className={styles.headerCell} key={item}>
+                {item}
+              </th>
+            ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {products.map(product => (
+            <tr className={styles.contentRow} key={product.id}>
+              <td className={styles.contentCell}>
+                <div>{product.name}</div>
+              </td>
+              <td className={styles.contentCell}>
+                {product.ingredients.map(ingredient => (
+                  <>
+                    {enableHighlight && commonIngredients.includes(ingredient) ? (
+                      <span className={styles.highlight}>{ingredient}</span>
+                    ) : (
+                      { ingredient }
+                    )}
+                    ,
+                  </>
+                ))}
+              </td>
+              <td className={styles.contentCell}>
+                <a href={product.url} target="_blank" className={styles.link}>
+                  <span className={styles.linkTextWrapper}>
+                    {product.price}円<span className={styles.linkSubText}>商品ページへ</span>
+                  </span>
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   )
 }
 
@@ -49,6 +73,7 @@ const defaultStyles = {
 }
 const styles = {
   table: css`
+    margin-top: 20px;
     width: 100%;
   `,
   headerRow: css`
@@ -101,6 +126,10 @@ const styles = {
   noContentText: css`
     font-weight: normal;
     padding: 8px;
+  `,
+  highlight: css`
+    color: ${Colors.secondary};
+    font-weight: bold;
   `,
 }
 
