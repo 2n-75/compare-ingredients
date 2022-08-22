@@ -20,30 +20,23 @@ const Presentation: FC<Props> = ({ products }) => {
           ))}
         </tr>
       </thead>
-
-      {products.length === 0 ? (
-        <>
-          <p className={styles.noContentText}>データがありません</p>
-        </>
-      ) : (
-        <tbody>
-          {products.map(product => (
-            <tr className={styles.contentRow} key={product.id}>
-              <td className={styles.contentCell}>
-                <div>{product.name}</div>
-              </td>
-              <td className={styles.contentCell}>{product.ingredients}</td>
-              <td className={styles.contentCell}>
-                <a href={product.url} target="_blank" className={styles.link}>
-                  <span className={styles.linkTextWrapper}>
-                    {product.price}円<span className={styles.linkSubText}>商品ページへ</span>
-                  </span>
-                </a>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      )}
+      <tbody>
+        {products.map(product => (
+          <tr className={styles.contentRow} key={product.id}>
+            <td className={styles.contentCell}>
+              <div>{product.name}</div>
+            </td>
+            <td className={styles.contentCell}>{product.ingredients}</td>
+            <td className={styles.contentCell}>
+              <a href={product.url} target="_blank" className={styles.link}>
+                <span className={styles.linkTextWrapper}>
+                  {product.price}円<span className={styles.linkSubText}>商品ページへ</span>
+                </span>
+              </a>
+            </td>
+          </tr>
+        ))}
+      </tbody>
     </table>
   )
 }

@@ -1,9 +1,11 @@
-export const getProduct = async (url: string) => {
-  const requestUrl = `https://us-central1-compare-ingredients.cloudfunctions.net/getProduct?url=${url}`
-  const localUrl = `http://localhost:5001/compare-ingredients/us-central1/getProduct?url=${url}`
+export const getProduct = async (params: { url1: string; url2: string }) => {
+  const { url1, url2 } = params
+  const productionUrl = `https://us-central1-compare-ingredients.cloudfunctions.net/getProduct`
+  const localUrl = `http://localhost:5001/compare-ingredients/us-central1/getProduct`
 
+  const requestUrl = `${localUrl}?urls[]=${url1}&urls[]=${url2}`
   try {
-    const response = await fetch(localUrl, {
+    const response = await fetch(requestUrl, {
       method: 'GET',
     })
 
