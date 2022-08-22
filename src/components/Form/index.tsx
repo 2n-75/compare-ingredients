@@ -1,24 +1,19 @@
 import Presentation from './presentation'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useContext, useState } from 'react'
 import { SubmitHandler } from 'react-hook-form'
 import { getProduct } from '@/server/getProduct'
-import { Product } from '@/pages'
 import Router from 'next/router'
-
-export type Props = {
-  setUrl: Dispatch<SetStateAction<string>>
-  setProducts: Dispatch<SetStateAction<Product[]>>
-  products: Product[]
-}
+import { ProductsContext, setProductsContext } from '../App'
 
 export type FormValue = {
   url1: string
   url2: string
 }
-const Form: FC<Props> = ({ setUrl, setProducts, products }) => {
+const Form: FC = () => {
   const [isFetching, setIsFetching] = useState(false)
+  const products = useContext(ProductsContext)
+  const setProducts = useContext(setProductsContext)
   const onSubmit: SubmitHandler<FormValue> = data => {
-    setUrl(data.url1)
     setIsFetching(true)
     getProduct(data.url1)
       .then(result => {

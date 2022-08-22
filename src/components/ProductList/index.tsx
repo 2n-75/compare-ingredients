@@ -1,11 +1,9 @@
-import { Product } from '@/pages'
-import { FC } from 'react'
+import { FC, useContext } from 'react'
+import { ProductsContext } from '../App'
 import Presentation from './presentation'
 
-type Props = {
-  products: Product[]
-}
-export const ProductList: FC<Props> = ({ products }) => {
+export const ProductList: FC = () => {
+  const products = useContext(ProductsContext)
   /*const dummy = [
     {
       id: 1,
@@ -32,7 +30,5 @@ export const ProductList: FC<Props> = ({ products }) => {
       url: 'https://www.cosme.com/products/detail.php?product_id=51819',
     },
   ]*/
-
-  // TODO: reducerでデータを取り出して渡す
   return <Presentation products={products} />
 }

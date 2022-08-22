@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import 'the-new-css-reset/css/reset.css'
 import { ProductList } from '@/components/ProductList'
 import { css } from '@emotion/css'
@@ -7,17 +6,7 @@ import Layout from '@/components/Layout'
 import { Button } from '@/components/Button'
 import { Colors } from '@/styles/colors'
 
-export type Product = {
-  id: number
-  name: string
-  price: string
-  ingredients?: string
-  url: string
-}
-
 export default function Result() {
-  const [products, setProducts] = useState<Product[]>([])
-
   const handleHighlight = () => {
     console.log('マークする')
   }
@@ -33,7 +22,7 @@ export default function Result() {
               </label>
             </div>
             <div className={styles.contentsWrapper}>
-              <ProductList products={products} />
+              <ProductList />
             </div>
           </section>
 

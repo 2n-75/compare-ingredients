@@ -1,5 +1,5 @@
 import { Colors } from '@/styles/colors'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { css } from '@emotion/css'
 import { FormValue } from '.'

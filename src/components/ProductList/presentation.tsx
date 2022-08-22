@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { css } from '@emotion/css'
 import { Colors } from '@/styles/colors'
-import { Product } from '@/pages'
+import { Product } from '../App'
 
 export type Props = {
   products: Array<Product>
