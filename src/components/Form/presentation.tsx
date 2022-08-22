@@ -1,63 +1,79 @@
 import { Colors } from '@/styles/colors'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { css } from '@emotion/react'
+import { css } from '@emotion/css'
+import { FormValue } from '.'
+import { Button } from '../Button'
 
 export type Props = {
   isFetching: boolean
-  onSubmit: SubmitHandler<Input>
+  onSubmit: SubmitHandler<FormValue>
 }
 
-type Input = {
-  url: string
-}
 const Presentation: FC<Props> = ({ isFetching, onSubmit }) => {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors, isDirty, isValid },
-  } = useForm<Input>({ mode: 'onChange' })
+  } = useForm<FormValue>({ mode: 'onChange' })
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} css={styles.form}>
-      <label>商品ページURL</label>
-      <div css={styles.gridRow}>
-        <div css={styles.inputContainer}>
-          <input
-            placeholder="https://www.cosme.com/products/detail.php?product_id=000000"
-            {...register('url', { pattern: /^https:\/\/www.cosme.com\/products\/detail.php\?product_id=[0-9]+$/i })}
-            css={styles.input}
-          />
-          {errors.url && <p css={styles.errorMessage}>入力された値は無効です</p>}
-        </div>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+      <div className={styles.inputContainer}>
+        <label>ひとつめの商品</label>
+        <input
+          placeholder="https://www.cosme.com/products/detail.php?product_id=000000"
+          {...register('url1', { pattern: /^https:\/\/www.cosme.com\/products\/detail.php\?product_id=[0-9]+$/i })}
+          className={styles.input}
+        />
+        {errors.url1 && <p className={styles.errorMessage}>入力された値は無効です</p>}
+      </div>
 
-        <button type="submit" css={styles.submitButton} disabled={isFetching || !isDirty || !isValid}>
-          取得する
-        </button>
+      <div className={styles.inputContainer}>
+        <label>ふたつめの商品</label>
+        <input
+          placeholder="https://www.cosme.com/products/detail.php?product_id=000000"
+          {...register('url2', { pattern: /^https:\/\/www.cosme.com\/products\/detail.php\?product_id=[0-9]+$/i })}
+          className={styles.input}
+        />
+        {errors.url2 && <p className={styles.errorMessage}>入力された値は無効です</p>}
+      </div>
+
+      <div className={styles.buttonWrapper}>
+        <Button className={styles.submitButton} type="submit" disabled={isFetching || !isDirty || !isValid}>
+          比較する
+        </Button>
       </div>
     </form>
   )
 }
 
 const styles = {
-  form: css``,
-  gridRow: css`
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 180px;
-    gap: 40px;
+  form: css`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   `,
-  inputContainer: css``,
+  inputContainer: css`
+    height: 100px;
+  `,
   input: css`
     width: 100%;
     padding: 8px;
     border-radius: 3px;
     border: 1px solid ${Colors.gray};
-    font-size: 16px;
     &::placeholder {
       color: ${Colors.gray};
     }
+    margin-top: 4px;
+  `,
+  buttonWrapper: css`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
   `,
   submitButton: css`
     display: flex;

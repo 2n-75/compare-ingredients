@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { css } from '@emotion/react'
+import { css } from '@emotion/css'
 import { Colors } from '@/styles/colors'
 import { Product } from '@/pages'
 
@@ -10,11 +10,11 @@ const Presentation: FC<Props> = ({ products }) => {
   const header = ['商品', '成分', '価格']
 
   return (
-    <table css={styles.table}>
+    <table className={styles.table}>
       <thead>
-        <tr css={[styles.row, styles.headerRow]}>
+        <tr className={styles.headerRow}>
           {header.map(item => (
-            <th css={styles.headerCell} key={item}>
+            <th className={styles.headerCell} key={item}>
               {item}
             </th>
           ))}
@@ -23,20 +23,20 @@ const Presentation: FC<Props> = ({ products }) => {
 
       {products.length === 0 ? (
         <>
-          <p css={styles.noContentText}>データがありません</p>
+          <p className={styles.noContentText}>データがありません</p>
         </>
       ) : (
         <tbody>
           {products.map(product => (
-            <tr css={[styles.row, styles.contentRow]} key={product.id}>
-              <td css={styles.contentCell}>
+            <tr className={styles.contentRow} key={product.id}>
+              <td className={styles.contentCell}>
                 <div>{product.name}</div>
               </td>
-              <td css={styles.contentCell}>{product.ingredients}</td>
-              <td css={styles.contentCell}>
-                <a href={product.url} target="_blank" css={styles.link}>
-                  <span css={styles.linkTextWrapper}>
-                    {product.price}円<span css={styles.linkSubText}>商品ページへ</span>
+              <td className={styles.contentCell}>{product.ingredients}</td>
+              <td className={styles.contentCell}>
+                <a href={product.url} target="_blank" className={styles.link}>
+                  <span className={styles.linkTextWrapper}>
+                    {product.price}円<span className={styles.linkSubText}>商品ページへ</span>
                   </span>
                 </a>
               </td>
@@ -48,19 +48,23 @@ const Presentation: FC<Props> = ({ products }) => {
   )
 }
 
-const styles = {
-  table: css`
-    width: 100%;
-  `,
+const defaultStyles = {
   row: css`
     display: grid;
     grid-template-columns: 0.5fr 1fr 160px;
   `,
+}
+const styles = {
+  table: css`
+    width: 100%;
+  `,
   headerRow: css`
+    ${defaultStyles.row};
     background: ${Colors.black};
     border-radius: 3px 3px 0 0;
   `,
   contentRow: css`
+    ${defaultStyles.row};
     border-bottom: 1px solid ${Colors.gray};
   `,
   headerCell: css`
@@ -86,7 +90,6 @@ const styles = {
     background: ${Colors.primary};
     color: white;
     border-radius: 3px;
-    font-size: 16px;
     font-weight: 700;
     text-align: center;
     transition: all 0.2s;
@@ -99,11 +102,10 @@ const styles = {
     flex-direction: column;
   `,
   linkSubText: css`
-    font-size: 12px;
+    font-size: 0.75em;
     font-weight: normal;
   `,
   noContentText: css`
-    font-size: 16px;
     font-weight: normal;
     padding: 8px;
   `,

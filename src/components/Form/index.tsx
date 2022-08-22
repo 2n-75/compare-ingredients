@@ -3,6 +3,7 @@ import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { SubmitHandler } from 'react-hook-form'
 import { getProduct } from '@/server/getProduct'
 import { Product } from '@/pages'
+import Router from 'next/router'
 
 export type Props = {
   setUrl: Dispatch<SetStateAction<string>>
@@ -10,19 +11,21 @@ export type Props = {
   products: Product[]
 }
 
-type Input = {
-  url: string
+export type FormValue = {
+  url1: string
+  url2: string
 }
 const Form: FC<Props> = ({ setUrl, setProducts, products }) => {
   const [isFetching, setIsFetching] = useState(false)
-  const onSubmit: SubmitHandler<Input> = data => {
-    setUrl(data.url)
+  const onSubmit: SubmitHandler<FormValue> = data => {
+    setUrl(data.url1)
     setIsFetching(true)
-    getProduct(data.url)
+    getProduct(data.url1)
       .then(result => {
         setIsFetching(false)
         console.log({ result })
         setProducts([...products, result.product])
+        Router.push('/result')
       })
       .catch(error => {
         console.log({ error })

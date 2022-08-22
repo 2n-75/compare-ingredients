@@ -1,10 +1,9 @@
 import Form from '@/components/Form'
-import { useEffect, useReducer, useState } from 'react'
+import { useState } from 'react'
 import 'the-new-css-reset/css/reset.css'
-import { ProductList } from '@/components/ProductList'
-import { css } from '@emotion/react'
 import App from '@/components/App'
-import { initialState, reducer } from '@/store/products'
+import Layout from '@/components/Layout'
+import { css } from '@emotion/css'
 
 export type Product = {
   id: number
@@ -20,21 +19,25 @@ export default function Home() {
 
   return (
     <App>
-      <p>Index Page</p>
-      <section>
-        <h2>商品情報取得</h2>
-        <Form setUrl={setUrl} setProducts={setProducts} products={products}></Form>
-      </section>
-
-      <section css={styles.productListWrapper}>
-        <ProductList products={products} />
-      </section>
+      <Layout title="成分比較">
+        <>
+          <p>
+            <a href="https://cosmestore.net/" target="_blank">
+              @cosmestore
+            </a>
+            の商品を比較します。商品URLを入力してください。
+          </p>
+          <div className={styles.formWrapper}>
+            <Form setUrl={setUrl} setProducts={setProducts} products={products}></Form>
+          </div>
+        </>
+      </Layout>
     </App>
   )
 }
 
 const styles = {
-  productListWrapper: css`
-    margin-top: 40px;
+  formWrapper: css`
+    margin-top: 20px;
   `,
 }
